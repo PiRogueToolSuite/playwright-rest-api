@@ -12,4 +12,4 @@ RUN python --version
 
 USER alice
 WORKDIR ${APP_HOME}
-CMD ["uvicorn", "app.server:app", "--host", "0.0.0.0", "--port", "80"]
+CMD ["uvicorn", "app.server:app", "--host", "0.0.0.0", "--port", "80", "--workers", "4"]
