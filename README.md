@@ -13,3 +13,7 @@ curl -X POST --location "http://localhost:8989/capture" \
     -H "Content-Type: application/json" \
     -d "{\"url\": \"https://pts-project.org\"}" --output out.zip
 ```
+
+The returned ZIP archive contains:
+* `screenshot.png`
+* `capture.har`
