@@ -1,3 +1,4 @@
+import logging
 import os
 import shutil
 import tempfile
@@ -44,7 +45,8 @@ async def __capture_url(url_request: URLRequest):
             await page.screenshot(path=screenshot_file_path, full_page=True)
             await context.close()
             await browser.close()
-        except Exception:
+        except Exception as e:
+            logging.error(e)
             shutil.rmtree(output_dir, ignore_errors=True)
             return None
     with NamedTemporaryFile(suffix='.zip', delete=False) as output_file:
@@ -67,6 +69,7 @@ def __get_zip_archive(output_file):
 
 @app.post('/capture')
 async def capture_url(url_request: URLRequest):
+    logging.info(f'Browsing {url_request}')
     output_file = await __capture_url(url_request)
     if not output_file:
         raise HTTPException(status_code=500, detail=f'Unable to browse {url_request.url}')
