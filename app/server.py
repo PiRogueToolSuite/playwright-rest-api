@@ -1,3 +1,4 @@
+import asyncio
 import logging
 import os
 import shutil
@@ -42,6 +43,7 @@ async def __capture_url(url_request: URLRequest):
             page = await context.new_page()
             page.set_default_navigation_timeout(60000)  # Timeout 1 minute
             await page.goto(url_request.url)
+            await asyncio.sleep(15)
             await page.screenshot(path=screenshot_file_path, full_page=True)
             await context.close()
             await browser.close()
