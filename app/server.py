@@ -5,7 +5,8 @@ import shutil
 import tempfile
 from tempfile import NamedTemporaryFile
 from zipfile import ZipFile
-
+from PIL import Image, ImageDraw, ImageFont
+from datetime import datetime
 from fastapi import FastAPI, HTTPException
 from playwright.async_api import async_playwright
 from pydantic import BaseModel
@@ -22,6 +23,18 @@ class URLRequest(BaseModel):
 app = FastAPI()
 
 
+def add_watermark(input_path, output_path, url):
+    now = datetime.utcnow()
+    input_image = Image.open(input_path)
+    output_image = Image.new(input_image.mode, (input_image.width, input_image.height + 40), 'black')
+    output_image.paste(input_image)
+    draw = ImageDraw.Draw(output_image)
+    font = ImageFont.truetype("Pillow/Tests/fonts/FreeMono.ttf", 14)
+    draw.text((5, input_image.height + 5), f'URL: {url}', font=font, fill='white')
+    draw.text((5, input_image.height + 20), f'Captured on {now.isoformat()}', font=font, fill='white')
+    output_image.save(output_path)
+
+
 async def __capture_url(url_request: URLRequest):
     proxy = None
     if url_request.proxy_server:
@@ -31,6 +44,7 @@ async def __capture_url(url_request: URLRequest):
             'password': url_request.proxy_password
         }
     output_dir = tempfile.mkdtemp()
+    tmp_screenshot_file_path = f'{output_dir}/tmp_screenshot.png'
     screenshot_file_path = f'{output_dir}/screenshot.png'
     har_file_path = f'{output_dir}/capture.har'
     async with async_playwright() as p:
@@ -44,9 +58,10 @@ async def __capture_url(url_request: URLRequest):
             page.set_default_navigation_timeout(60000)  # Timeout 1 minute
             await page.goto(url_request.url)
             await asyncio.sleep(15)
-            await page.screenshot(path=screenshot_file_path, full_page=True)
+            await page.screenshot(path=tmp_screenshot_file_path, full_page=True)
             await context.close()
             await browser.close()
+            add_watermark(tmp_screenshot_file_path, screenshot_file_path, url_request.url)
         except Exception as e:
             logging.error(e)
             shutil.rmtree(output_dir, ignore_errors=True)
