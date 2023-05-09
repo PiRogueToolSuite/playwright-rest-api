@@ -29,9 +29,11 @@ def add_watermark(input_path, output_path, url):
     output_image = Image.new(input_image.mode, (input_image.width, input_image.height + 40), 'black')
     output_image.paste(input_image)
     draw = ImageDraw.Draw(output_image)
-    font = ImageFont.truetype("Pillow/Tests/fonts/FreeMono.ttf", 14)
-    draw.text((5, input_image.height + 5), f'URL: {url}', font=font, fill='white')
-    draw.text((5, input_image.height + 20), f'Captured on {now.isoformat()}', font=font, fill='white')
+    # font = ImageFont.truetype("Pillow/Tests/fonts/FreeMono.ttf", 14)
+    # draw.text((5, input_image.height + 5), f'URL: {url}', font=font, fill='white')
+    # draw.text((5, input_image.height + 20), f'Captured on {now.isoformat()}', font=font, fill='white')
+    draw.text((5, input_image.height + 5), f'URL: {url}')
+    draw.text((5, input_image.height + 20), f'Captured on {now.isoformat()}')
     output_image.save(output_path)
 
 
