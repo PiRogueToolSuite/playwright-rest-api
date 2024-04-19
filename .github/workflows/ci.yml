@@ -84,7 +84,13 @@ jobs:
             annotation.org.opencontainers.image.description="Playwright REST API service for URL screenshot and traffic capture" 
             annotation.org.opencontainers.image.vendor="Defensive Lab Agency" 
             annotation.org.opencontainers.image.licenses="GPL-3.0"
-            annotation.org.opencontainers.image.revision="${{ github.sha }}"     
+            annotation.org.opencontainers.image.revision="${{ github.sha }}"    
+
+      - name: Log into Docker Hub
+        uses: docker/login-action@v3.1.0
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Docker Scout
         id: docker-scout
