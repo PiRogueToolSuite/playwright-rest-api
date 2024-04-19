@@ -14,9 +14,6 @@ License: GPLv3
 </p>
 </div>
 
-# Playwright REST API
-Playwright REST API Docker service for URL screenshot and traffic capture.
-
 ## Example of usage
 First, start the Playwright container:
 ```
