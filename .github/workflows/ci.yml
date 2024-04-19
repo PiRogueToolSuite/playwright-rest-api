@@ -92,7 +92,7 @@ jobs:
         uses: docker/scout-action@v1
         with:
           command: cves,sbom
-          image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          image: ${{ steps.meta.outputs.tags }}
           sarif-file: sarif.output.json
           summary: true
           only-severities: critical,high
