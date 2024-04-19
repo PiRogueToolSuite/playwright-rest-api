@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/playwright/python:v1.32.0-focal
+FROM mcr.microsoft.com/playwright/python:v1.42.0-jammy
 
 LABEL org.opencontainers.image.source="https://github.com/PiRogueToolSuite/playwright-rest-api" \
       org.opencontainers.image.description="Playwright REST API service for URL screenshot and traffic capture" \
