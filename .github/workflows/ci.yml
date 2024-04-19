@@ -97,7 +97,7 @@ jobs:
         uses: docker/scout-action@v1
         with:
           command: cves,sbom
-          image: ghcr.io/piroguetoolsuite/playwright-rest-api:${{ DOCKER_METADATA_OUTPUT_VERSION }}
+          image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ env.DOCKER_METADATA_OUTPUT_VERSION }}
           sarif-file: sarif.output.json
           summary: true
           only-severities: critical,high
