@@ -1,9 +1,9 @@
 FROM mcr.microsoft.com/playwright/python:v1.32.0-focal
 
-LABEL org.opencontainers.image.source https://github.com/PiRogueToolSuite/playwright-rest-api
-LABEL org.opencontainers.image.description Playwright REST API service for URL screenshot and traffic capture
-LABEL org.opencontainers.image.vendor Defensive Lab Agency
-LABEL org.opencontainers.image.licenses GPL-3.0
+LABEL org.opencontainers.image.source="https://github.com/PiRogueToolSuite/playwright-rest-api" \
+      org.opencontainers.image.description="Playwright REST API service for URL screenshot and traffic capture" \
+      org.opencontainers.image.vendor="Defensive Lab Agency" \
+      org.opencontainers.image.licenses="GPL-3.0"
 
 ARG APP_HOME=/app
 
