@@ -16,6 +16,8 @@ COPY --chown=alice:alice ./app ${APP_HOME}/app
 
 RUN python --version
 
+RUN playwright install firefox
+
 USER alice
 WORKDIR ${APP_HOME}
 CMD ["uvicorn", "app.server:app", "--host", "0.0.0.0", "--port", "80", "--workers", "4"]
